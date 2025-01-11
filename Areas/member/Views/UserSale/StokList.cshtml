@@ -1,0 +1,33 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Stock>
+
+@{
+    ViewData["Title"] = "Stok Listesi";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+}
+
+<h2>Stok Listesi</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ürün Adı</th>
+            <th>Depo Adı</th>
+            <th>Miktar</th>
+            <th>Tarih</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Product?.ProductName</td>
+                <td>@item.Warehouse?.WarehouseName</td>
+                <td>@item.Quantity</td>
+                <td>@item.Date.ToShortDateString()</td>
+             
+            </tr>
+        }
+    </tbody>
+</table>
+

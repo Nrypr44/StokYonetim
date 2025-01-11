@@ -1,0 +1,42 @@
+﻿@model InventoryManagement.Areas.member.Models.EditProfileViewModel
+
+@{
+    ViewData["Title"] = "Profilini Düzenle";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<h2>Profilini Düzenle</h2>
+
+<form asp-action="EditProfile" method="post">
+    <div class="form-group">
+        <label for="FullName">Ad Soyad</label>
+        <input type="text" class="form-control" id="FullName" name="FullName" value="@Model.FullName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">E-posta</label>
+        <input type="email" class="form-control" id="Email" name="Email" value="@Model.Email" required />
+    </div>
+
+    <div class="form-group">
+        <label for="UserName">Kullanıcı Adı</label>
+        <input type="text" class="form-control" id="UserName" name="UserName" value="@Model.UserName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="CurrentPassword">Eski Şifre</label>
+        <input type="password" class="form-control" id="CurrentPassword" name="CurrentPassword" placeholder="Eski şifrenizi girin" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Password">Yeni Şifre (Değiştirmek İstemiyorsanız Boş Bırakın)</label>
+        <input type="password" class="form-control" id="Password" name="Password" placeholder="Yeni şifre" />
+    </div>
+
+    <div class="form-group">
+        <label>Şifre Tekrar</label>
+        <input type="password" asp-for="ConfirmPassword" class="form-control" placeholder="Şifre tekrar" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Profili Güncelle</button>
+</form>

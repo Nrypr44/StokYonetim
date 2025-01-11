@@ -1,0 +1,62 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Sale>
+@{
+    ViewData["Title"] = "Satışlarım";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+}
+
+<h2>Satışlarım</h2>
+
+<!-- Başarı ve Hata Mesajları -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<!-- Yeni Satış Ekle Butonu -->
+<div class="mb-3">
+    <a asp-action="AddSale" class="btn btn-primary">Yeni Satış Ekle</a>
+</div>
+
+<!-- Satış Listesi Tablosu -->
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Ürün</th>
+            <th>Depo</th>
+            <th>Miktar</th>
+            <th>Tarih</th>
+            <th>Adres</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            var counter = 1;
+            foreach (var sale in Model)
+            {
+                <tr>
+                    <td>@counter</td>
+                    <td>@sale.Product?.ProductName</td>
+                    <td>@sale.Warehouse?.WarehouseName</td>
+                    <td>@sale.Quantity</td>
+                    <td>@sale.SaleDate.ToString("dd/MM/yyyy")</td>
+                    <td>@sale.Customer?.Address</td>
+                </tr>
+                counter++;
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">Henüz bir satış kaydı bulunmamaktadır.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

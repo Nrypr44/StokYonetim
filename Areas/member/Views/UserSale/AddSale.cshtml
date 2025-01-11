@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Yeni Satış Ekle";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+}
+
+<style>
+    form {
+        margin: 0 auto;
+        padding: 10px;
+        width: 50%;
+    }
+
+    h1 {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    button {
+        margin-top: 15px;
+    }
+</style>
+
+<form asp-action="AddSale" method="post">
+    <h2>Yeni Satış Ekle</h2>
+   <br />
+    @Html.AntiForgeryToken()
+    <div>
+        <label>Ürün Seç</label>
+        @Html.DropDownList("productId", (SelectList)ViewBag.Products, "Ürün Seçin", new { @class = "form-control" })
+    </div>
+    <div>
+        <label>Depo Seç</label>
+        @Html.DropDownList("warehouseId", (SelectList)ViewBag.Warehouses, "Depo Seçin", new { @class = "form-control" })
+    </div>
+    <div>
+        <label>Miktar</label>
+        <input type="number" name="saleQuantity" class="form-control" required />
+    </div>
+    <div>
+        <label>Kullanıcı Adı</label>
+        <input type="text" class="form-control" value="@ViewBag.UserName" disabled />
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="email" class="form-control" value="@ViewBag.UserEmail" disabled />
+    </div>
+    <div>
+        <label>Adres</label>
+        <input type="text" name="customerAddress" class="form-control" placeholder="Sipariş adresini giriniz" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Satış Yap</button>
+</form>
