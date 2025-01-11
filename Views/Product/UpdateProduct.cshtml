@@ -1,0 +1,92 @@
+﻿@model EntityLayer.Concrete.Product
+@{
+    ViewData["Title"] = "Stock List";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+}
+
+<style>
+    form {
+        margin: 0 auto;
+        padding: 10px;
+        width: 50%;
+    }
+
+    h1 {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    button {
+        margin-top: 15px;
+    }
+</style>
+<h1>Ürün Güncelleme</h1>
+<form method="post">
+        <input type="hidden" name="ProductID" value="@Model.ProductID" />
+        <!-- Diğer form alanları -->
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ProductName, "Ürün Adı")
+        @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Price, "Fiyat")
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description, "Açıklama")
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label for="SKU">SKU</label>
+        <input class="form-control" id="SKU" name="SKU" type="text" value="@Model.SKU" />
+    </div>
+
+    <div class="form-group">
+        <label for="Category">Kategori</label>
+        <input class="form-control" id="Category" name="Category" type="text" value="@Model.Category" />
+    </div>
+    
+
+
+    <h3>Barkodlar</h3>
+    <div id="barcodeContainer">
+        @if (Model.Barcodes != null && Model.Barcodes.Any())
+        {
+            for (int i = 0; i < Model.Barcodes.Count(); i++)
+            {
+                <div class="form-group">
+                    <input type="text" name="barcodes" class="form-control" value="@Model.Barcodes.ElementAt(i).Barcode" />
+                </div>
+            }
+        }
+        else
+        {
+            <div class="form-group">
+                <input type="text" name="barcodes" class="form-control" placeholder="Barkod" />
+            </div>
+        }
+    </div>
+
+    <button type="button" onclick="addBarcodeInput()" class="btn btn-secondary">Barkod Ekle</button>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <button class="btn btn-secondary">İptal</a>
+</form>
+
+<script type="text/javascript">
+    function addBarcodeInput() {
+        var barcodeContainer = document.getElementById("barcodeContainer");
+        var newInput = document.createElement("div");
+        newInput.className = "form-group";
+        newInput.innerHTML = '<input type="text" name="barcodes" class="form-control" placeholder="Yeni Barkod" />';
+        barcodeContainer.appendChild(newInput);
+    }
+</script>

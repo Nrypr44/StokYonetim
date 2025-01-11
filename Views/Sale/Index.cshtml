@@ -1,0 +1,58 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Sale>
+@{
+    ViewData["Title"] = "Satış Listesi";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+}
+
+<h2>Satış Listesi</h2>
+<a href="@Url.Action("AddSale", "Sale")" class="btn btn-success">Satışı Ekle</a>
+
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Satış ID</th>
+            <th>Ürün</th>
+            <th>Depo</th>
+            <th>Miktar</th>
+            <th>Satış Tarihi</th>
+            <th>Müşteri</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sale in Model)
+        {
+            <tr>
+                <td>@sale.SaleID</td>
+                <td>
+                    @if (sale.Product != null)
+                    {
+                        @sale.Product.ProductName
+                    }
+                    else
+                    {
+                        <span>Product not available</span>
+                    }
+                </td>
+                <td>@sale.Warehouse.WarehouseName</td>
+                <td>@sale.Quantity</td>
+                <td>@sale.SaleDate.ToString("yyyy-MM-dd")</td>
+                <td>@sale.Customer.CustomerName</td>
+                <td>
+                    <form asp-action="DeleteSale" asp-controller="Sale" method="post" onsubmit="return confirm('Bu satışı silmek istediğinize emin misiniz?');">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="saleId" value="@sale.SaleID" />
+                        <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

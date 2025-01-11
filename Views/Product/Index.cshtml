@@ -1,0 +1,65 @@
+﻿<h1>Ürün Listesi</h1>
+<!-- SignalR kütüphanesini ekleyin -->
+@{
+    ViewData["Title"] = "Ürün Listesi";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+}
+
+<!-- Add Product Button -->
+<a href="@Url.Action("AddProduct", "Product")" class="btn btn-success mb-3">Yeni Ürün Ekle</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ürün ID</th>
+            <th>Ürün Adı</th>
+            <th>Fiyat</th>
+            <th>Kategori</th>
+            <th>SKU</th>
+            <th>Açıklama</th>
+            <th>Barkod</th>
+            <th>Aksiyonlar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductID</td>
+                <td>@product.ProductName</td>
+                <td>@product.Price.ToString("C")</td>
+                <td>@product.Category</td>
+                <td>@product.SKU</td>
+                <td>@product.Description</td>
+                <td>
+                    @if (product.Barcodes != null && product.Barcodes.Count > 0)  
+                    {
+                        <ul>
+                            @foreach (var barcode in product.Barcodes)
+                            {
+                                <img src="data:image/png;base64,@barcode.Barcode" alt="Barcode" />
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span>No Barcode</span>
+                    }
+                </td>
+                <td>
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-primary btn-sm" style="display:inline;" href="/Product/UpdateProduct/@product.ProductID">Güncelle</a>
+                        <form method="post" action="/Product/DeleteProduct/@product.ProductID" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                            <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                        </form>
+                    </div>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+
+

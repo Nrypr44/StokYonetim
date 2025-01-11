@@ -1,0 +1,111 @@
+﻿@model Tuple<List<BusinessLayer.Concrete.ProductSalesAnalysis>, List<BusinessLayer.Concrete.CategorySalesAnalysis>>
+
+@{
+    ViewData["Title"] = "Product & Category Sales Analysis";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+
+<!-- 📊 Genel Ürün Satış Grafiği -->
+<h3>Genel Ürün Satış Grafiği</h3>
+@if (Model.Item1 == null || !Model.Item1.Any())
+{
+    <p>No product sales data available.</p>
+}
+else
+{
+    <div style="width: 100%; margin-bottom: 40px;">
+        <canvas id="productSalesChart"></canvas>
+    </div>
+}
+
+<!-- 📊 Kategori Satış Grafiği -->
+<h3>Kategorilere Göre Satış Grafiği</h3>
+@if (Model.Item2 == null || !Model.Item2.Any())
+{
+    <p>No category sales data available.</p>
+}
+else
+{
+    <div style="width: 100%; max-width: 600px;">
+        <canvas id="categorySalesChart"></canvas>
+    </div>
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // 🟦 Ürün Satış Grafiği (Bar Chart)
+    @if (Model.Item1 != null && Model.Item1.Any())
+    {
+        <text>
+                    const productSalesCtx = document.getElementById('productSalesChart').getContext('2d');
+            new Chart(productSalesCtx, {
+                type: 'bar',
+                data: {
+                    labels: @Html.Raw(Json.Serialize(Model.Item1.Select(p => p.ProductName))),
+                    datasets: [{
+                        label: 'Toplam Satışlar',
+                        data: @Html.Raw(Json.Serialize(Model.Item1.Select(p => p.TotalSales))),
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true, position: 'top' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        </text>
+    }
+
+            // 🟦 Kategori Satış Grafiği (Pie Chart)
+    @if (Model.Item2 != null && Model.Item2.Any())
+    {
+        <text>
+                    const categorySalesCtx = document.getElementById('categorySalesChart').getContext('2d');
+            new Chart(categorySalesCtx, {
+                type: 'pie',
+                data: {
+                    labels: @Html.Raw(Json.Serialize(Model.Item2.Select(c => c.CategoryName))),
+                    datasets: [{
+                        label: 'Kategoriye Göre Satışlar',
+                        data: @Html.Raw(Json.Serialize(Model.Item2.Select(c => c.TotalSales))),
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true, position: 'top' }
+                    }
+                }
+            });
+        </text>
+    }
+        });
+</script>
+
+ 

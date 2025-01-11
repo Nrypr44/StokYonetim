@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Stock>
+
+@{
+    ViewData["Title"] = "Stock List";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+}
+
+<h2>Stok Listesi</h2>
+<a asp-action="AddStock" class="btn btn-primary">Yeni Stok Ekle</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Stok ID</th>
+            <th>Ürün Adı</th>
+            <th>Depo Adı</th>
+            <th>Miktar</th>
+            <th>Hareket Türü</th>
+            <th>Tarih</th>
+            <th>Aksiyonlar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.StockID</td>
+                <td>@item.Product?.ProductName</td>
+                <td>@item.Warehouse?.WarehouseName</td>
+                <td>@item.Quantity</td>
+                <td>@item.StockMovementType</td>
+                <td>@item.Date.ToShortDateString()</td>
+                <td>
+                    <a asp-action="UpdateStock" asp-route-id="@item.StockID" class="btn btn-sm btn-warning">Güncelle</a>
+                    <form asp-action="DeleteStock" asp-route-id="@item.StockID" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Emin misin?')">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

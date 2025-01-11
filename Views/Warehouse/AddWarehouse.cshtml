@@ -1,0 +1,63 @@
+﻿@model EntityLayer.Concrete.Warehouse
+
+@{
+    ViewData["Title"] = "Depo Oluştur";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+
+}
+<style>
+    form {
+        margin: 0 auto;
+        padding: 10px;
+        width: 50%;
+    }
+
+    h1 {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    button {
+        margin-top: 15px;
+    }
+</style>
+<h1>Depo Ekle</h1>
+
+<form asp-action="AddWarehouse" method="post">
+    <div class="form-group">
+        <label for="WarehouseName">Depo Adı</label>
+        <input type="text" class="form-control" id="WarehouseName" name="WarehouseName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Location">Lokasyon</label>
+        <input type="text" class="form-control" id="Location" name="Location" required />
+    </div>
+
+    <div class="form-group">
+        <label for="ManagerName">Yönetici Adı</label>
+        <input type="text" class="form-control" id="ManagerName" name="ManagerName" required />
+    </div>
+    <div class="form-group">
+        <label for="ManagerMail">Yönetici Email</label>
+        <input type="email" class="form-control" id="ManagerEmail" name="ManagerEmail" required />
+    </div>
+    <div class="form-group">
+        <label for="Capacity">Kapasite</label>
+        <input type="number" class="form-control" id="Capacity" name="Capacity" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Depo Ekle</button>
+</form>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger mt-3">
+        <strong>Error:</strong> @ViewBag.ErrorMessage
+    </div>
+}

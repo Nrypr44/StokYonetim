@@ -1,0 +1,68 @@
+﻿@model EntityLayer.Concrete.Warehouse
+
+@{
+    ViewData["Title"] = "Edit Warehouse";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+}
+<style>
+    form {
+        margin: 0 auto;
+        padding: 10px;
+        width: 50%;
+    }
+
+    h1 {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    button {
+        margin-top: 15px;
+    }
+</style>
+<h1>Depo Bilgilerini Güncelle</h1>
+
+
+<form asp-action="EditWarehouse" asp-controller="Warehouse" asp-route-id="@Model.WarehouseID" method="post">
+    <input type="hidden" asp-for="WarehouseID" />
+
+    <div class="form-group">
+        <label asp-for="WarehouseName" class="control-label">Depo Adı</label>
+        <input asp-for="WarehouseName" class="form-control" />
+        <span asp-validation-for="WarehouseName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Location" class="control-label">Lokasyon</label>
+        <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+
+    <!-- ManagerName alanı -->
+    <div class="form-group">
+        <label asp-for="ManagerName" class="control-label">Yönetici Adı</label>
+        <input asp-for="ManagerName" class="form-control" />
+        <span asp-validation-for="ManagerName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ManagerEmail" class="control-label">Yönetici Maili</label>
+        <input asp-for="ManagerEmail" class="form-control" />
+        <span asp-validation-for="ManagerEmail" class="text-danger"></span>
+    </div>
+
+    <!-- Capacity alanı -->
+    <div class="form-group">
+        <label asp-for="Capacity" class="control-label">Kapasite</label>
+        <input asp-for="Capacity" class="form-control" />
+        <span asp-validation-for="Capacity" class="text-danger"></span>
+    </div>
+   
+    <button type="submit" class="btn btn-primary">Değişiklikleri Kaydet</button>
+</form>
+

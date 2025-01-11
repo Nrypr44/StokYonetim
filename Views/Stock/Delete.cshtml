@@ -1,0 +1,12 @@
+﻿@model EntityLayer.Concrete.Stock
+
+
+<h1>Stok Sil</h1>
+
+<p>Bu stok kaydını silmek istediğinizden emin misiniz?</p>
+
+<form asp-action="DeleteConfirmed">
+    <button type="submit" class="btn btn-danger">Evet,sil</button>
+    <a class="btn btn-secondary" href="@Url.Action("Index", "Stock")">Hayır</a>
+</form>
+

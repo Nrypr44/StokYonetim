@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using EntityLayer.Concrete
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+<ul class="menu-inner py-1">
+
+    @if (User.IsInRole("Admin"))
+    {
+        <!-- Dashboard -->
+        <li class="menu-item">
+            <a href="/Product/Index/" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Ürünler</div>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="/Stock/Index/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-plane-alt"></i>
+                <div data-i18n="Analytics">Stoklar</div>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="/Warehouse/Index/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-car"></i>
+                <div data-i18n="Analytics">Depolar</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/Sale/Index/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-car"></i>
+                <div data-i18n="Analytics">Satış</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/SalesAnalysis/ProductSalesAnalysis/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-car"></i>
+                <div data-i18n="Analytics">Ürün Analiz</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/SalesAnalysis/WarehouseSalesAnalysis/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-car"></i>
+                <div data-i18n="Analytics">Depo Analiz</div>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a asp-controller="Account" asp-action="UpdateProfile" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-user"></i>
+                <div data-i18n="Profil Güncelle">Profil Güncelle</div>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a asp-controller="Account" asp-action="Logout" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-log-out"></i>
+                <div data-i18n="Logout">Çıkış Yap</div>
+            </a>
+        </li>
+      
+
+    }
+    @if (User.IsInRole("User"))
+    {
+        <li class="menu-item">
+            <a href="/member/Profile/EditProfile/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-car"></i>
+                <div data-i18n="Analytics">Profil İşlemleri</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="/member/UserSale/AddSale/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-car"></i>
+                <div data-i18n="Analytics">Sipariş Ver</div>
+            </a>
+        </li>
+   
+        <li class="menu-item">
+            <a href="/member/UserSale/Index/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-car"></i>
+                <div data-i18n="Analytics">Siparişlerim</div>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="/member/UserSale/StokList/" class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-car"></i>
+                <div data-i18n="Analytics">Stok Durumu</div>
+            </a>
+        </li>
+    }
+</ul>

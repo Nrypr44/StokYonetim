@@ -1,0 +1,75 @@
+﻿@model InventoryManagement.Models.RegisterViewModel
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol</title>
+    <link rel="stylesheet" href="~/registercss/register.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="left-panel">
+        <h1>Yeni Hesap Açın</h1>
+        <p>Depo ve stok takibini daha kolay ve etkili bir şekilde yapmak için şimdi kaydolun. Ürünlerinizi yönetin, stok seviyelerinizi izleyin ve işlerinizi tek bir yerden kontrol edin. Hızlı ve güvenli kayıt süreciyle hemen başlayın!</p>
+    </div>
+    <div class="right-panel">
+        <h2>Kayıt Olun</h2>
+        <form asp-action="Register" method="post">
+            <div class="form-group">
+                <input asp-for="Username" placeholder="Kullanıcı adı" required>
+                <i class="icon fas fa-user"></i>
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Email" type="email" placeholder="Email" required>
+                <i class="icon fas fa-envelope"></i>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="PhoneNumber" placeholder="Telefon Numarası" required>
+                <i class="icon fas fa-phone"></i>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Password" type="password" id="password" placeholder="Şifre" required autocomplete="new-password">
+                <i class="icon fas fa-eye" onclick="togglePassword('password', this)"></i>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="ConfirmPassword" type="password" id="confirm-password" placeholder="Şifreyi tekrar" required autocomplete="new-password">
+                <i class="icon fas fa-eye" onclick="togglePassword('confirm-password', this)"></i>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" required>
+                <label>Koşulları kabul ediyorum</label>
+            </div>
+            <button type="submit">Kayıt Ol</button>
+            <div class="alternate">
+                <span>Veya</span>
+                <a asp-action="Login" class="btn btn-link">Giriş Yap</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                input.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+    </script>
+</body>
+</html>

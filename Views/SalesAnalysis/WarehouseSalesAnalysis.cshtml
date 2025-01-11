@@ -1,0 +1,68 @@
+﻿@model List<BusinessLayer.Concrete.WarehouseSalesAnalysis>
+
+@{
+    ViewData["Title"] = "Warehouse Analysis";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+
+<!-- Çubuk Grafiği: Stok ve Satış Analizi -->
+<h3>Depo Satışları ve Stok Bilgisi</h3>
+<div style="width: 560px; height: 400px; margin: auto;">
+    <canvas id="warehouseSalesChart" ></canvas>
+</div>
+<!-- Pasta Grafiği: Stok Dağılımı (Küçük Boyutlu) -->
+<h3>Depolardaki Stok Miktarları</h3>
+<div style="width: 400px; height: 400px; margin: auto;">
+    <canvas id="warehouseStockChart"></canvas>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Çubuk Grafiği: Satış ve Stok Analizi
+        var ctxSales = document.getElementById('warehouseSalesChart').getContext('2d');
+        var warehouseSalesChart = new Chart(ctxSales, {
+            type: 'bar',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.Select(m =>  m.WarehouseName))),
+                datasets: [
+                    {
+                        label: 'Toplam Satış',
+                        data: @Html.Raw(Json.Serialize(Model.Select(m => m.TotalSales))),
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                   
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Pasta Grafiği: Stok Dağılımı
+        var ctxStock = document.getElementById('warehouseStockChart').getContext('2d');
+        var warehouseStockChart = new Chart(ctxStock, {
+            type: 'pie',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.Select(m =>  m.WarehouseName))),
+                datasets: [{
+                    data: @Html.Raw(Json.Serialize(Model.Select(m => m.TotalStock))),
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+       
+    });
+</script>

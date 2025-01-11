@@ -1,0 +1,46 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Warehouse>
+@{
+    ViewData["Title"] = "Index Warehouse";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+}
+
+
+<h1 style="margin-bottom: 10px;">Depo Listesi</h1>
+
+<p style="margin-bottom: 10px;">
+    <a asp-action="AddWarehouse" class="btn btn-success">Yeni Depo Ekle</a>
+</p>
+
+<table class="table" style="margin-top: 10px;">
+    <thead>
+        <tr>
+            <th>Depo Adı</th>
+            <th>Lokasyon</th>
+            <th>Yönetici</th>
+            <th>Kapasite</th>
+            <th>Yönetici Maili</th>
+            <th>Aksiyonlar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var warehouse in Model)
+        {
+            <tr>
+                <td>@warehouse.WarehouseName</td>
+                <td>@warehouse.Location</td>
+                <td>@warehouse.ManagerName</td>
+                <td>@warehouse.Capacity</td>
+                <td>@warehouse.ManagerEmail</td>
+
+                <td>
+                    <a asp-action="EditWarehouse" asp-route-id="@warehouse.WarehouseID" class="btn btn-warning">Güncelle</a>
+                    <form method="post" asp-action="DeleteWarehouse" asp-route-id="@warehouse.WarehouseID" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Sil</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

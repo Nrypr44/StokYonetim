@@ -1,0 +1,63 @@
+﻿@model List<BusinessLayer.Concrete.ProductSalesAnalysis>
+
+@{
+    ViewData["Title"] = "Product Analysis";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+}
+
+<h2>Ürün Satış Analizi</h2>
+
+@if (ViewBag.TopSellingProducts != null && ((List<dynamic>)ViewBag.TopSellingProducts).Any())
+{
+    <ul>
+        @foreach (var item in ViewBag.TopSellingProducts)
+        {
+            <li>@item.ProductName - @item.TotalSales</li>
+        }
+    </ul>
+}
+else
+{
+    <p>@(ViewBag.Message ?? "No top-selling products available.")</p>
+}
+
+<canvas id="topSellingChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var topSellingProducts = @Html.Raw(Json.Serialize(ViewBag.TopSellingProducts));
+        console.log('Top Selling Products:', topSellingProducts);
+
+        if (topSellingProducts && topSellingProducts.length > 0) {
+            var productNames = topSellingProducts.map(p => p.ProductName);
+            var totalSales = topSellingProducts.map(p => p.TotalSales);
+
+            var ctx = document.getElementById('topSellingChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: productNames,
+                    datasets: [{
+                        label: 'Total Sales',
+                        data: totalSales,
+                        backgroundColor: '#36A2EB',
+                        borderColor: '#1E88E5',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        } else {
+            console.warn('No data available for Top Selling Products chart.');
+        }
+    });
+</script>
+

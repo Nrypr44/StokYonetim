@@ -1,0 +1,105 @@
+﻿@{
+    ViewData["Title"] = "Add Sale";
+    Layout = "~/Views/Shared/_UILayout.cshtml";
+
+}
+@{
+    var successMessage = ViewBag.SuccessMessage ?? TempData["Success"];
+    var errorMessage = ViewBag.ErrorMessage ?? TempData["Error"];
+}
+
+<style>
+    form {
+        margin: 0 auto;
+        padding: 10px;
+        width: 50%;
+    }
+
+    h1 {
+        margin: 20px 0;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    button {
+        margin-top: 15px;
+    }
+</style>
+<style>
+    .div {
+        width: 50%;
+    }
+
+</style>
+@if (successMessage != null)
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
+}
+
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger">
+        @errorMessage
+    </div>
+}
+<h1>Satış Ekle</h1>
+<form asp-action="AddSale" method="post">
+    <div>
+        <label for="productId">Ürün Seç</label>
+        <select name="productId" asp-items="ViewBag.Products" class="form-control"></select>
+    </div>
+
+    <div>
+        <label for="warehouseId">Depo Seç</label>
+        <select name="warehouseId" asp-items="ViewBag.Warehouses" class="form-control"></select>
+    </div>
+
+    <div>
+        <label for="saleQuantity">Satış Miktarı</label>
+        <input name="saleQuantity" class="form-control" />
+    </div>
+
+    <div>
+        <label for="customerId">Var Olan Müşteri Seç</label>
+        <select id="CustomerID" name="CustomerID" asp-items="ViewBag.Customers" class="form-control" onchange="toggleCustomerFields()">
+            <option value="">-- Müşteri Seç --</option>
+        </select>
+    </div>
+
+    <div id="newCustomerFields">
+        <h4>Yeni Müşteri Ekle</h4>
+        <div>
+            <label for="customerName">Müşteri Adı</label>
+            <input id="CustomerName" name="CustomerName" class="form-control" />
+        </div>
+        <div>
+            <label for="customerEmail">Müşteri E-posta</label>
+            <input id="Email" name="Email" class="form-control" />
+        </div>
+        <div>
+            <label for="customerAddress">Müşteri Adresi</label>
+            <input id="Address" name="Address" class="form-control" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Satış Yap</button>
+</form>
+
+<script>
+    function toggleCustomerFields() {
+        var customerId = document.getElementById("CustomerID").value;
+        var newCustomerFields = document.getElementById("newCustomerFields");
+
+        if (customerId) {
+            newCustomerFields.style.display = 'none';
+        } else {
+            newCustomerFields.style.display = 'block';
+        }
+    }
+    document.addEventListener("DOMContentLoaded", toggleCustomerFields);
+</script>
